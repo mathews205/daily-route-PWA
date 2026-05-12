@@ -390,3 +390,19 @@ button:active {
     font-size: 19px;
   }
 }
+/* DATE FIELD FIX */
+input[type="date"] {
+  max-width: 220px;
+  width: 100%;
+}
+
+/* MOBILE */
+@media (max-width: 480px) {
+
+  input[type="date"] {
+    max-width: 170px;
+    padding: 12px 14px;
+    font-size: 14px;
+  }
+
+}
