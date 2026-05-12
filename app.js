@@ -78,8 +78,22 @@ async function saveData() {
   const tripType = document.getElementById("tripType").value;
 
   if (!date || !route || !tripType) {
-    document.getElementById("status").innerText =
-      "Please select date, route and trip type";
+    alert("⚠️ Please select date, route and trip type.");
+    return;
+  }
+
+  const duplicateKey = `${date}-${route}-${tripType}`;
+
+  if (localStorage.getItem(duplicateKey)) {
+    alert("🚫 This entry is already saved for today.\n\nDate: " + date + "\nRoute: " + route + "\nType: " + tripType);
+    return;
+  }
+
+  const confirmSave = confirm(
+    `Please confirm before saving:\n\nDate: ${date}\nRoute: ${route}\nType: ${tripType}\n\nDo you want to submit?`
+  );
+
+  if (!confirmSave) {
     return;
   }
 
@@ -120,16 +134,24 @@ async function saveData() {
     const result = await response.json();
 
     if (result.success) {
+      localStorage.setItem(duplicateKey, "saved");
+
+      alert("✅ Data saved successfully!");
+
       document.getElementById("status").innerText =
         "Saved Successfully";
     } else {
+      alert("❌ Failed to save data.");
       document.getElementById("status").innerText =
         "Failed";
     }
 
   } catch (error) {
+    alert("❌ Error saving data. Check internet or API URL.");
+
     document.getElementById("status").innerText =
       "Error Saving Data";
+
     console.log(error);
   }
 }
