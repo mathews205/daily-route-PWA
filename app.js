@@ -84,9 +84,18 @@ async function saveData() {
 
   const duplicateKey = `${date}-${route}-${tripType}`;
 
+  let forceSave = false;
+
   if (localStorage.getItem(duplicateKey)) {
-    alert("🚫 This entry is already saved for today.\n\nDate: " + date + "\nRoute: " + route + "\nType: " + tripType);
-    return;
+    const forceConfirm = confirm(
+      "⚠️ This entry already exists.\n\nDo you want to force update it?\n\nOnly changed item values will replace old values."
+    );
+
+    if (!forceConfirm) {
+      return;
+    }
+
+    forceSave = true;
   }
 
   const confirmSave = confirm(
@@ -120,6 +129,7 @@ async function saveData() {
     date,
     route,
     tripType,
+    force: forceSave,
     items
   };
 
