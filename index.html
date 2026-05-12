@@ -2,9 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>Divine</title>
-  <link rel="stylesheet" href="style.css">
+
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
@@ -12,14 +14,15 @@
 
     <h1>Divine</h1>
 
-    <input type="date" id="date">
+    <input type="date" id="date" />
 
     <select id="route">
       <option value="">Select Route</option>
-      <option>Kattappana</option>
-      <option>cheruthoni</option>
-      <option>kozhimala</option>
-      <option>puliyanmala</option>
+      <option value="Kattappana">Kattappana</option>
+      <option value="Kerala">Kerala</option>
+      <option value="Tamil Nadu">Tamil Nadu</option>
+      <option value="Karnataka">Karnataka</option>
+      <option value="Andhra">Andhra</option>
     </select>
 
     <select id="tripType" onchange="renderItems()">
@@ -30,7 +33,7 @@
 
     <div id="items"></div>
 
-    <button onclick="saveData()">Save Data</button>
+    <button type="button" onclick="saveData()">Save Data</button>
 
     <p id="status"></p>
 

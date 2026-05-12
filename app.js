@@ -23,14 +23,22 @@ const itemNames = [
   "Kuzhal (500g)"
 ];
 
-const itemsContainer = document.getElementById("items");
+const itemTypes = ["Going", "Returning"];
+
+window.onload = function () {
+  const today = new Date().toISOString().split("T")[0];
+  document.getElementById("date").value = today;
+};
 
 function renderItems() {
   const tripType = document.getElementById("tripType").value;
+  const itemsContainer = document.getElementById("items");
 
   itemsContainer.innerHTML = "";
 
-  if (!tripType) return;
+  if (!tripType) {
+    return;
+  }
 
   itemNames.forEach(name => {
     let fields = "";
@@ -39,9 +47,10 @@ function renderItems() {
       fields = `
         <input
           type="number"
+          min="0"
           placeholder="Quantity"
           id="${name}-quantity"
-        >
+        />
       `;
     }
 
@@ -50,15 +59,17 @@ function renderItems() {
         <div class="two-column">
           <input
             type="number"
+            min="0"
             placeholder="Balance"
             id="${name}-balance"
-          >
+          />
 
           <input
             type="number"
+            min="0"
             placeholder="Damaged"
             id="${name}-damaged"
-          >
+          />
         </div>
       `;
     }
@@ -83,10 +94,7 @@ async function saveData() {
   }
 
   const duplicateKey = `${date}-${route}-${tripType}`;
-
   let forceSave = false;
-
-  const duplicateKey = `${date}-${route}-${tripType}`;
 
   if (localStorage.getItem(duplicateKey)) {
     const forceConfirm = confirm(
@@ -101,7 +109,7 @@ async function saveData() {
   }
 
   const confirmSave = confirm(
-    `Please confirm before saving:\n\nDate: ${date}\nRoute: ${route}\nType: ${tripType}\n\nDo you want to submit?`
+    `Please confirm before saving:\n\nDate: ${date}\nRoute: ${route}\nOperation: ${tripType}\n\nDo you want to submit?`
   );
 
   if (!confirmSave) {
@@ -114,25 +122,25 @@ async function saveData() {
     if (tripType === "Going") {
       items.push({
         name: name,
-        quantity: document.getElementById(`${name}-quantity`).value || 0
+        quantity: Number(document.getElementById(`${name}-quantity`).value || 0)
       });
     }
 
     if (tripType === "Returning") {
       items.push({
         name: name,
-        balance: document.getElementById(`${name}-balance`).value || 0,
-        damaged: document.getElementById(`${name}-damaged`).value || 0
+        balance: Number(document.getElementById(`${name}-balance`).value || 0),
+        damaged: Number(document.getElementById(`${name}-damaged`).value || 0)
       });
     }
   });
 
   const payload = {
-    date,
-    route,
-    tripType,
+    date: date,
+    route: route,
+    tripType: tripType,
     force: forceSave,
-    items
+    items: items
   };
 
   try {
@@ -150,22 +158,15 @@ async function saveData() {
 
       alert("✅ Data saved successfully!");
 
-      document.getElementById("status").innerText =
-        "Saved Successfully";
+      document.getElementById("status").innerText = "Saved Successfully";
     } else {
       alert("❌ Failed to save data.");
-      document.getElementById("status").innerText =
-        "Failed";
+      document.getElementById("status").innerText = "Failed";
     }
 
   } catch (error) {
     alert("❌ Error saving data. Check internet or API URL.");
-
-    document.getElementById("status").innerText =
-      "Error Saving Data";
-
+    document.getElementById("status").innerText = "Error Saving Data";
     console.log(error);
   }
 }
-
-renderItems();
