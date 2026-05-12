@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Daily Route Billing</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="container">
+
+    <h1>Daily Route Billing</h1>
+
+    <input type="date" id="date">
+
+    <select id="route">
+      <option value="">Select Route</option>
+      <option>Kerala</option>
+      <option>Tamil Nadu</option>
+      <option>Karnataka</option>
+      <option>Andhra</option>
+    </select>
+
+    <div id="items"></div>
+
+    <button onclick="saveData()">
+      Save Data
+    </button>
+
+    <p id="status"></p>
+
+  </div>
+
+  <script src="app.js"></script>
+
+</body>
+</html>
