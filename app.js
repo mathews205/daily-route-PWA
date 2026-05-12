@@ -90,7 +90,7 @@ async function saveData() {
 
   if (localStorage.getItem(duplicateKey)) {
     const forceConfirm = confirm(
-      "⚠️ This entry already exists.\n\nDo you want to force update it?\n\nOnly changed item values will replace old values."
+      "⚠️ This operation was already submitted.\n\nDo you want to force update it?"
     );
 
     if (!forceConfirm) {
