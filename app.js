@@ -86,6 +86,8 @@ async function saveData() {
 
   let forceSave = false;
 
+  const duplicateKey = `${date}-${route}-${tripType}`;
+
   if (localStorage.getItem(duplicateKey)) {
     const forceConfirm = confirm(
       "⚠️ This entry already exists.\n\nDo you want to force update it?\n\nOnly changed item values will replace old values."
