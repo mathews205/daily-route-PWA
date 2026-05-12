@@ -3,9 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
   <title>Daily Route Billing</title>
-
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -18,17 +16,21 @@
 
     <select id="route">
       <option value="">Select Route</option>
-      <option>Kerala</option>
-      <option>Tamil Nadu</option>
-      <option>Karnataka</option>
-      <option>Andhra</option>
+      <option>Kattappana</option>
+      <option>cheruthoni</option>
+      <option>kozhimala</option>
+      <option>puliyanmala</option>
+    </select>
+
+    <select id="tripType" onchange="renderItems()">
+      <option value="">Select Trip Type</option>
+      <option value="going">Going</option>
+      <option value="returning">Returning</option>
     </select>
 
     <div id="items"></div>
 
-    <button onclick="saveData()">
-      Save Data
-    </button>
+    <button onclick="saveData()">Save Data</button>
 
     <p id="status"></p>
 

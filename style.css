@@ -1,53 +1,142 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
-  font-family: Arial, sans-serif;
-  background: #f4f4f4;
   margin: 0;
-  padding: 20px;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  background: #dfeaf6;
+  padding: 18px;
+  color: #111;
 }
 
 .container {
-  max-width: 500px;
+  max-width: 520px;
   margin: auto;
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
+  background: #fdfdfd;
+  padding: 22px;
+  border-radius: 26px;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.12);
 }
 
 h1 {
   text-align: center;
+  margin: 6px 0 20px;
+  font-size: 28px;
+  font-weight: 900;
+  color: #111;
+}
+
+h1::before {
+  content: "🧾 ";
 }
 
 input,
 select {
   width: 100%;
-  padding: 10px;
-  margin-top: 10px;
-  box-sizing: border-box;
+  padding: 15px 14px;
+  margin-top: 12px;
+  border: 1.5px solid #d8d8d8;
+  border-radius: 14px;
+  font-size: 15px;
+  background: #ffffff;
+  outline: none;
+}
+
+input:focus,
+select:focus {
+  border-color: #57943a;
+  box-shadow: 0 0 0 3px rgba(87, 148, 58, 0.15);
+}
+
+#items {
+  margin-top: 18px;
 }
 
 .item-card {
-  border: 1px solid #ddd;
-  padding: 10px;
-  margin-top: 15px;
-  border-radius: 8px;
+  background: #ffffff;
+  border: 1px solid #eeeeee;
+  padding: 16px;
+  margin-top: 16px;
+  border-radius: 20px;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.06);
+  position: relative;
+  overflow: hidden;
+}
+
+.item-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 7px;
+  height: 100%;
+  background: #57943a;
 }
 
 .item-card h3 {
-  margin: 0 0 10px 0;
+  margin: 0 0 12px 0;
+  font-size: 20px;
+  font-weight: 800;
+  color: #111;
+  padding-left: 4px;
+}
+
+.item-card h3::before {
+  content: "🛒 ";
+}
+
+.two-column {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
 }
 
 button {
   width: 100%;
-  padding: 12px;
-  margin-top: 20px;
-  background: black;
+  padding: 16px;
+  margin-top: 24px;
+  background: #57943a;
   color: white;
   border: none;
-  border-radius: 8px;
-  font-size: 16px;
+  border-radius: 18px;
+  font-size: 17px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(87, 148, 58, 0.35);
+}
+
+button::before {
+  content: "✅ ";
+}
+
+button:active {
+  transform: scale(0.98);
 }
 
 #status {
   text-align: center;
-  margin-top: 15px;
+  margin-top: 16px;
+  font-weight: 700;
+  color: #57943a;
+}
+
+@media (max-width: 420px) {
+  body {
+    padding: 12px;
+  }
+
+  .container {
+    padding: 18px;
+    border-radius: 22px;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  .two-column {
+    grid-template-columns: 1fr;
+  }
 }

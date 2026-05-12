@@ -1,75 +1,116 @@
 const API_URL = "https://script.google.com/macros/s/AKfycbyoTNTb7QXOez2oqNJ7MR8NLhvBbkpv1mbA6M-Itwly_J8gyLvpFjuZ1onm4jhTANJN/exec";
 
 const itemNames = [
-  "Milk",
-  "Bread",
-  "Chocolate"
+  "Achappam",
+  "Kuzhal",
+  "Cheeda",
+  "Unda",
+  "Ladu",
+  "Pappada Boli",
+  "Avalose Podi",
+  "Coconut Boli",
+  "Fruit Chips",
+  "Chips",
+  "Pakkavada",
+  "Mixture",
+  "Madakku",
+  "Ellunda",
+  "Tomato Murukku",
+  "Finger White",
+  "Achappam (Box)",
+  "Bombay Mixture",
+  "Cake",
+  "Kuzhal (500g)"
 ];
 
-const itemsContainer =
-  document.getElementById("items");
+const itemsContainer = document.getElementById("items");
 
-itemNames.forEach(name => {
+function renderItems() {
+  const tripType = document.getElementById("tripType").value;
 
-  itemsContainer.innerHTML += `
-    <div class="item-card">
+  itemsContainer.innerHTML = "";
 
-      <h3>${name}</h3>
+  if (!tripType) return;
 
-      <input
-        type="number"
-        placeholder="Morning Qty"
-        id="${name}-morning"
-      >
+  itemNames.forEach(name => {
+    let fields = "";
 
-      <input
-        type="number"
-        placeholder="Remaining Qty"
-        id="${name}-remaining"
-      >
+    if (tripType === "going") {
+      fields = `
+        <input
+          type="number"
+          placeholder="Quantity"
+          id="${name}-quantity"
+        >
+      `;
+    }
 
-      <input
-        type="number"
-        placeholder="Expired Qty"
-        id="${name}-expired"
-      >
+    if (tripType === "returning") {
+      fields = `
+        <div class="two-column">
+          <input
+            type="number"
+            placeholder="Balance"
+            id="${name}-balance"
+          >
 
-    </div>
-  `;
-});
+          <input
+            type="number"
+            placeholder="Damaged"
+            id="${name}-damaged"
+          >
+        </div>
+      `;
+    }
+
+    itemsContainer.innerHTML += `
+      <div class="item-card">
+        <h3>${name}</h3>
+        ${fields}
+      </div>
+    `;
+  });
+}
 
 async function saveData() {
+  const date = document.getElementById("date").value;
+  const route = document.getElementById("route").value;
+  const tripType = document.getElementById("tripType").value;
 
-  const date =
-    document.getElementById("date").value;
-
-  const route =
-    document.getElementById("route").value;
+  if (!date || !route || !tripType) {
+    document.getElementById("status").innerText =
+      "Please select date, route and trip type";
+    return;
+  }
 
   const items = [];
 
   itemNames.forEach(name => {
+    if (tripType === "going") {
+      items.push({
+        name: name,
+        quantity: document.getElementById(`${name}-quantity`).value || 0
+      });
+    }
 
-    items.push({
-      name: name,
-      morning:
-        document.getElementById(`${name}-morning`).value || 0,
-
-      remaining:
-        document.getElementById(`${name}-remaining`).value || 0,
-
-      expired:
-        document.getElementById(`${name}-expired`).value || 0
-    });
+    if (tripType === "returning") {
+      items.push({
+        name: name,
+        balance: document.getElementById(`${name}-balance`).value || 0,
+        damaged: document.getElementById(`${name}-damaged`).value || 0
+      });
+    }
   });
 
   const payload = {
     date,
     route,
+    tripType,
     items
   };
 
   try {
+    document.getElementById("status").innerText = "Saving...";
 
     const response = await fetch(API_URL, {
       method: "POST",
@@ -79,21 +120,18 @@ async function saveData() {
     const result = await response.json();
 
     if (result.success) {
-
-      document.getElementById("status")
-        .innerText = "Saved Successfully";
-
+      document.getElementById("status").innerText =
+        "Saved Successfully";
     } else {
-
-      document.getElementById("status")
-        .innerText = "Failed";
+      document.getElementById("status").innerText =
+        "Failed";
     }
 
   } catch (error) {
-
-    document.getElementById("status")
-      .innerText = "Error Saving Data";
-
+    document.getElementById("status").innerText =
+      "Error Saving Data";
     console.log(error);
   }
 }
+
+renderItems();
