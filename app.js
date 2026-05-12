@@ -35,7 +35,7 @@ function renderItems() {
   itemNames.forEach(name => {
     let fields = "";
 
-    if (tripType === "going") {
+    if (tripType === "Going") {
       fields = `
         <input
           type="number"
@@ -45,7 +45,7 @@ function renderItems() {
       `;
     }
 
-    if (tripType === "returning") {
+    if (tripType === "Returning") {
       fields = `
         <div class="two-column">
           <input
@@ -111,14 +111,14 @@ async function saveData() {
   const items = [];
 
   itemNames.forEach(name => {
-    if (tripType === "going") {
+    if (tripType === "Going") {
       items.push({
         name: name,
         quantity: document.getElementById(`${name}-quantity`).value || 0
       });
     }
 
-    if (tripType === "returning") {
+    if (tripType === "Returning") {
       items.push({
         name: name,
         balance: document.getElementById(`${name}-balance`).value || 0,
